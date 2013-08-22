@@ -9,7 +9,6 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "sahi-berkshelf"
 
   # Every Vagrant virtual environment requires a box to build off of.
-  #config.vm.box = "rhel64-64"
   config.vm.box = "ubuntu-precise-chef11"
 
   # The url from where the 'config.vm.box' box will be fetched if it
@@ -78,8 +77,6 @@ Vagrant.configure("2") do |config|
 
     chef.run_list = [
         "recipe[minitest-handler::default]",
-        #"recipe[yum::epel]",
-        #"recipe[yum::remi]",
         "recipe[sahi::default]"
     ]
   end
