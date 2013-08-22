@@ -16,3 +16,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
+
+include_recipe "java"
+
+# yum::epel et yum::remi should be in run list
+#include_recipe "yum"
+
+## Deps
+#
+# Install firefox
+package "firefox"
+# install xvfb if needed
+
+
+package value_for_platform_family(
+  ["rhel", "fedora", "suse"] => "xorg-x11-server-Xvfb",
+  ["debian","ubuntu"] => "xvfb"
+)
+
+# intall firefox / other browser
+# download, save
+# install x86 runtime
+#sudo yum install glibc.i686
+#sudo yum install libstdc++.i686
+#sudo yum install glib2
+
+
+### 
+# Sahi itself
+# download install zip
+#
+#  start proxy/daemon?
+
+
+
+# Expose test, script??
+
