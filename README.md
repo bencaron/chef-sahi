@@ -10,4 +10,4 @@
 
 # Author
 
-Author:: La Presse (<bcaron@lapresse.ca>)
+Author:: Benoit Caron 
