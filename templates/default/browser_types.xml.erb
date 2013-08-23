@@ -1,0 +1,25 @@
+<browserTypes> 
+  <% if node['sahi']['with_firefox'] %>
+  <browserType> 
+    <name>firefox-xvfb</name> 
+    <displayName>Firefox</displayName>
+    <icon>firefox.png</icon>
+    <path>xvfb-run -n :99 firefox</path>  
+    <<options>-profile "$userDir/browser/ff/profiles/sahi$threadNo" -no-remote</options>
+    <processName>firefox</processName> 
+    <capacity>5</capacity>  
+  </browserType>
+  <% end %>
+  <% if node['sahi']['with_phantomjs'] %>
+  <browserType>
+    <name>phantomjs</name>
+    <displayName>PhantomJS</displayName>
+    <icon>safari.png</icon>
+    <path>/vagrant/tmp/phantomjs-1.9.1-linux-x86_64/bin/phantomjs</path>
+    <options>--proxy=localhost:9999 /vagrant/tmp/sahi.js</options>
+    <processName>phantomjs</processName>
+    <capacity>100</capacity>
+    <force>true</force>
+  </browserType>
+  <% end %>
+</browserTypes> 

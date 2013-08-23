@@ -20,33 +20,56 @@
 
 include_recipe "java"
 
+
+if node['sahi']['with_phantomjs']
+  package "phantomjs"
+end
+if node['sahi']['with_firefox']
+  include_recipe "sahi::firefox"
+end
+
+
 # yum::epel et yum::remi should be in run list
 #include_recipe "yum"
 
 ## Deps
-#
-# Install firefox
-package "firefox"
-# install xvfb if needed
-
-
-package value_for_platform_family(
-  ["rhel", "fedora", "suse"] => "xorg-x11-server-Xvfb",
-  ["debian","ubuntu"] => "xvfb"
-)
-
-# intall firefox / other browser
-# download, save
-# install x86 runtime
-#sudo yum install glibc.i686
-#sudo yum install libstdc++.i686
-#sudo yum install glib2
-
-
+package "unzip"
 ### 
 # Sahi itself
 # download install zip
-#
+
+sahiuser = node["sahi"]["user"]
+user sahiuser do
+  action :create
+end
+
+zipfile = "#{Chef::Config[:file_cache_path]}/sahi.zip"
+sahipath = node["sahi"]["path"]
+
+remote_file zipfile do
+  source node['sahi']['download_url']
+end
+directory sahipath do
+  owner sahiuser
+  group sahiuser
+end
+execute "unzip sahi" do
+  # not_if
+  # creates path/machin/truc.sh
+  command "unzip -q -u -o #{zipfile} -d #{sahipath}"
+  user sahiuser 
+end
+
+
+
+
+# Configure browser_type 
+template "#{sahipath}/sahi/userdata/config/browser_types.xml" do
+  source "browser_types.xml.erb"
+  user  sahiuser
+  group sahiuser
+end
+
 #  start proxy/daemon?
 
 
